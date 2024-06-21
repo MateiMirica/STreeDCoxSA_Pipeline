@@ -80,8 +80,8 @@ end
 results = []
 open(DIRECTORY * "/output/settings.txt") do f
     # Default parameters for warming up
-    file = "generated_dataset_02000_1_80_0"
-#     file = "divorce"
+#     file = "generated_dataset_02000_1_80_0"
+    file = "divorce"
     core_file = file
     max_depth = 0
     max_num_nodes = 0

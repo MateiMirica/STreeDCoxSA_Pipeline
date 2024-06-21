@@ -210,9 +210,9 @@ class Tree:
                 x_scale[j] = sqrt(x_scale[j])
                 if x_scale[j] == 0:
                     x_scale[j] = 1
-            for i in range(nrows):
-                for j in range(ncols):
-                    x[i][j] /= x_scale[j]
+            # for i in range(nrows):
+            #     for j in range(ncols):
+            #         x[i][j] /= x_scale[j]
             self.model_offset = 0
             for i in range(ncols):
                 self.model_offset += x_offset[i] * self.coefs[i]

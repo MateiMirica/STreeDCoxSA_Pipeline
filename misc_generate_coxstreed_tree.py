@@ -163,68 +163,36 @@ def plot_leaf_distributions(tree, path=""):
     kmf.fit(df["time"], df["event"])
     kmf.plot(color="#DF1F1F", ci_show=False, linewidth=3)
     ax.get_legend().remove()
-
-    # plt.xlabel("Time (days)", fontsize=14, labelpad=0)
-    # plt.ylabel("Survival rate", fontsize=14, labelpad=-10)
-    # plt.yticks([0, 1], ["0", "1"])
-    # plt.savefig(f"{DIRECTORY}/output/KM_distribution_{path}.svg", dpi=300)
-    #
-    # _, ax = plt.subplots(
-    #     figsize=(2, 4),
-    #     dpi=300,
-    #     gridspec_kw=dict(left=0.12, right=0.99, bottom=0.11, top=0.9),
-    #     facecolor="#FFFFFF"
-    # )
-    # ax.set_ylim([0, 1])
-    #
-    # for i in range(5):
+    # colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd',
+    #           '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf',
+    #           '#1a55FF', '#ffbb00', '#00d4ff', '#ff0044', '#004422',
+    #           '#7200da', '#ffe600', '#00ffa1', '#ff55a3', '#008cff']
+    # t = 0
+    # for i in range(len(tree.instances)):
+    #     if i % 20 != 0:
+    #         continue
+    #     t += 1
     #     inst = tree.instances[i]
     #     s = 0
     #     for j in range(len(tree.coefs)):
     #         s += tree.coefs[j] * list(inst.feats.values())[j]
     #     s -= tree.model_offset
     #     distr = tree.breslow_distribution
-    #     p2 = tree.get_expected_value(inst, inst)
-    #     p3 = pow(distr(p2), exp(s))
-    #     p4 = pow(distr(inst.time), exp(s))
-    #     plt.scatter([p2], [p3], alpha=0.3)
-    #     plt.scatter([inst.time], [p4], marker='^', alpha=0.3)
-    #     plt.step(tree.unique_times, pow(tree.baseline_survival, exp(s)), alpha=0.2)
-    # print(path)
-    # print(tree.coefs)
-    colors = ['#1f77b4', '#ff7f0e', '#2ca02c', '#d62728', '#9467bd',
-              '#8c564b', '#e377c2', '#7f7f7f', '#bcbd22', '#17becf',
-              '#1a55FF', '#ffbb00', '#00d4ff', '#ff0044', '#004422',
-              '#7200da', '#ffe600', '#00ffa1', '#ff55a3', '#008cff']
-    t = 0
+    #     ev = tree.get_expected_value(inst, inst)
+    #     p1 = pow(distr(ev), exp(s))
+    #     p2 = pow(distr(inst.time), exp(s))
+    #     color = colors[t]
+    #     plt.scatter([ev], [p1], color=color)
+    #     plt.scatter([inst.time], [p2], marker='^', color=color)
+    #     plt.step(tree.unique_times, pow(tree.baseline_survival, exp(s)), alpha=0.3, color=color)
     for i in range(len(tree.instances)):
-        if i % 20 != 0:
-            continue
-        t += 1
         inst = tree.instances[i]
         s = 0
         for j in range(len(tree.coefs)):
             s += tree.coefs[j] * list(inst.feats.values())[j]
         s -= tree.model_offset
-        distr = tree.breslow_distribution
-        ev = tree.get_expected_value(inst, inst)
-        p1 = pow(distr(ev), exp(s))
-        p2 = pow(distr(inst.time), exp(s))
-        color = colors[t]
-        plt.scatter([ev], [p1], color=color)
-        plt.scatter([inst.time], [p2], marker='^', color=color)
-        plt.step(tree.unique_times, pow(tree.baseline_survival, exp(s)), alpha=0.3, color=color)
+        plt.step(tree.unique_times, pow(tree.baseline_survival, exp(s)), alpha=0.1)
 
-    # f = open(f"{path}.txt", "w")
-    # final_lines = []
-    # for inst in tree.instances:
-    #     strg = str(inst.time) + " " + str(inst.event)
-    #     for j in range(len(tree.coefs)):
-    #         strg = strg + " " + str(list(inst.feats.values())[j])
-    #     final_lines.append(strg)
-    # final_lines.reverse()
-    # f.write("\n".join(final_lines))
-    # f.close()
     plt.xlabel("Time (days)", fontsize=14, labelpad=0)
     plt.ylabel("Survival rate", fontsize=14, labelpad=-10)
     plt.yticks([0, 1], ["0", "1"])
@@ -251,11 +219,11 @@ def main():
     feature_names, num_extra_cols = make_streed_compatible(train_path_bin, train_path_num, streed_file)
 
     # Run STreeD
-    # time_duration, tree = run_streed(num_extra_cols, train_filename)
-    # if time_duration >= 0:
-    #     print(f"\033[33;1m{tree}\033[0m")
-    #     print(f"\033[34mTime: \033[1m{time_duration:.3f}\033[0;34m seconds\033[0m")
-    tree = "[15,[50,[-0.520975,0.000000,0.022088,0.003427,0.019604,0.000000,0.018547],[-0.173628,0.678821,0.040158,0.002544,0.061661,0.000000,0.004338]],[44,[1.130926,0.960348,0.028138,0.003265,0.091126,-0.183788,-0.007964],[0.972430,1.521826,0.025237,0.003237,-0.064884,0.002366,-0.045905]]]"
+    time_duration, tree = run_streed(num_extra_cols, train_filename)
+    if time_duration >= 0:
+        print(f"\033[33;1m{tree}\033[0m")
+        print(f"\033[34mTime: \033[1m{time_duration:.3f}\033[0;34m seconds\033[0m")
+    # tree = "[15,[50,[-0.520975,0.000000,0.022088,0.003427,0.019604,0.000000,0.018547],[-0.173628,0.678821,0.040158,0.002544,0.061661,0.000000,0.004338]],[44,[1.130926,0.960348,0.028138,0.003265,0.091126,-0.183788,-0.007964],[0.972430,1.521826,0.025237,0.003237,-0.064884,0.002366,-0.045905]]]"
     # Parse tree string to lambda-structure
     feature_meanings = get_feature_meanings(train_filename)
     tree = serialize_tree_with_features(eval(tree), feature_names, feature_meanings)

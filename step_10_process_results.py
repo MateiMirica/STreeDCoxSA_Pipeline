@@ -13,7 +13,7 @@ ALG_INFO = {
     "ost": ("OST", "#DF7F1F"),
     "streed": ("STreeD", "#1FBF1F"),
     "coxstreedloglike": ("CoxStreeDLL", "#FC0345"),
-    "coxstreedcindex": ("CoxModelCI", "#123456")
+    "coxstreedcindex": ("CoxModelCI", "#123456"),
 }
 TRAIN_TEST_SCORE_TYPES = [
     ("Objective score", "objective_score"),
@@ -183,9 +183,7 @@ def compare_algs(data, alg1, alg2):
 def main():
     # Load data for each algorithm
     data = {}
-    # for algorithm in ["ctree", "ost", "streed", "coxstreedloglike", "coxstreedcindex"]:
-    for algorithm in ["ost", "streed", "coxstreedloglike", "coxstreedcindex"]:
-    # for algorithm in ["streed", "coxstreedloglike", "coxstreedcindex"]:
+    for algorithm in ["ctree", "ost", "streed", "coxstreedloglike", "coxstreedcindex"]:
         f = open(f"{DIRECTORY}/output/{algorithm}_output.csv")
         lines = f.read().strip().split("\n")
         f.close()

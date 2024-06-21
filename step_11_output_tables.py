@@ -12,7 +12,6 @@ def main():
     # Load data for each algorithm
     data = []
     algorithms = ["ctree", "ost", "streed", "coxstreedloglike", "coxstreedcindex"]
-    # algorithms = ["ctree", "streed"]
     for algorithm in algorithms:
         with open(f"{DIRECTORY}/output/{algorithm}_output.csv") as f:
             lines = f.read().strip().split("\n")

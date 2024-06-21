@@ -116,8 +116,6 @@ def run_streed(parameters, num_extra_cols):
     args.append(str(3))
     args.append("-num-extra-cols")
     args.append(str(num_extra_cols))
-    args.append("-min-leaf-node-size")
-    args.append(str(5 * num_extra_cols))
     args.append("-survival-validation")
     args.append("c-index")
     # Add addition arguments
