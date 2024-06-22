@@ -29,7 +29,7 @@ def plot(df):
 
     # Set other parameters and titles based on specific conditions
     for theta, ax in g.axes_dict.items():
-        if theta == 0.5:
+        if theta == 0.3:
             ax.set_title("$\\theta < 1$")
         elif theta == 1.0:
             ax.set_title("$\\theta = 1$")
